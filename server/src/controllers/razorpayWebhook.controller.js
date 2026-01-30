@@ -2,7 +2,6 @@ import crypto from 'crypto';
 import Payment from '../model/Payment.model.js';
 import NGO from '../model/Ngo.model.js';
 import statusCode from '../constants/statusCode.js';
-import {ApiError} from '../utility';
 
 export const handleRazorpayWebhook = async (req, res) => {
     const webhookSignature = req.headers['x-razorpay-signature'];

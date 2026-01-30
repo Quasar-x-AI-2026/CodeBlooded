@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This is the backend for our web-application made using Node.JS and Express.JS",
   "license": "ISC",
-  "author": "",
+  "author": "CodeBlooded",
   "type": "module",
   "main": "index.js",
   "scripts": {

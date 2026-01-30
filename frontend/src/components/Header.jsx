@@ -32,7 +32,7 @@ export default function Header() {
       {/* Actions */}
       <div className="flex items-center gap-3">
         <Link
-          to="/register/ngo"
+          to="/signup/ngo"
           className="px-3 py-1.5 text-sm rounded-lg border"
           style={{
             borderColor: 'var(--border)',
@@ -42,7 +42,7 @@ export default function Header() {
           Register as NGO
         </Link>
         <Link
-          to="/register/government"
+          to="/signup/user"
           className="px-3 py-1.5 text-sm rounded-lg"
           style={{
             backgroundColor: 'var(--primary)',

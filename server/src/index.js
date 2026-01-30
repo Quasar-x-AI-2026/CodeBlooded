@@ -5,15 +5,16 @@ import app from './app.js';
 import initializeSocket from './sockets/index.js';
 import registerSockets from './sockets/socket.js';
 import {startIssueCron} from './cron/issue.cron.js';
+import {startSevereIssueAlertCron} from './cron/emailAlert.cron.js';
 
 dotenv.config({
     path: `./.env`,
 });
 
 const port = process.env.PORT || 8000;
-const httpServer = createServer(app); // Create HTTP server
+const httpServer = createServer(app);
 
-const io = initializeSocket(httpServer); // Initialize Socket.io with the HTTP server
+const io = initializeSocket(httpServer);
 registerSockets(io);
 
 connectToDatabase().then(() => {
@@ -21,7 +22,8 @@ connectToDatabase().then(() => {
         console.log(`✅ Server is running on port ${port}`);
 
         //! Starting all the CRON Jobs
-        startIssueCron();
+        startIssueCron()
+        startSevereIssueAlertCron();
     });
 });
 

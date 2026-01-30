@@ -63,7 +63,7 @@ export default function SignupUser() {
         {/* LEFT PANEL (DESKTOP ONLY) */}
         <div className="hidden lg:block relative bg-[var(--accent-cyan-lighter)]">
           <img
-            src="/images/ngo-illustration.png"
+            src="/images/userauth.png"
             alt="Community support"
             className="absolute inset-0 h-full w-full object-cover"
           />

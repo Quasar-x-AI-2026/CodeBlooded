@@ -1,8 +1,8 @@
 import User from '../model/User.model.js';
-import {asyncHandler} from '../utility';
+import {asyncHandler} from '../utility/index.js';
 import statusCode from '../constants/statusCode.js';
-import {ApiResponse} from '../utility/';
-import {ApiError} from '../utility';
+import {ApiResponse} from '../utility/index.js';
+import {ApiError} from '../utility/index.js';
 import cookieOptions from '../constants/cookieOptions.js';
 
 export const registerUser = asyncHandler(async (req, res) => {

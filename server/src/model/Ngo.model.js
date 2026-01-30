@@ -98,7 +98,7 @@ ngoSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         { userId: this._id, name: this.name, ngoCode: this.NGOcode, role: 'ngo' },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15m' }
+        { expiresIn: '7d' }
     );
 };
 // Method to generate JWT refresh token

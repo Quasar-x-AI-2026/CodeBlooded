@@ -6,9 +6,10 @@ import Layout from './Layout.jsx';
 
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import SignupNgo from './pages/ngo/Signup';
-import LoginNgo from './pages/ngo/Login';
+import LoginNgo from './pages/ngo/login.jsx';
 import SignupUser from './pages/user/Signup';
-// import LoginUser from './pages/user/Login';
+import LoginUser from './pages/user/Login.jsx';
+import Donate from './pages/Donate.jsx';
 
 const router = createBrowserRouter([
     {
@@ -36,8 +37,16 @@ const router = createBrowserRouter([
                 element: <LoginNgo />,
             },
             {
+                path: 'login/user',
+                element: <LoginUser />,
+            },
+            {
                 path: 'signup/user',
                 element: <SignupUser />,
+            },
+            {
+                path: 'donate',
+                element: <Donate />,
             },
             {
                 path: '*',
@@ -49,7 +58,7 @@ const router = createBrowserRouter([
 
 function App() {
     return (
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <ErrorBoundary>
             <RouterProvider router={router} />
         </ErrorBoundary>

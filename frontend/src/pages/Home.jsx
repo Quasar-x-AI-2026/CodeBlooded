@@ -1,5 +1,5 @@
 import KPISection from "@/components/KPISection";
-import MapSection from "@/components/MapSection";
+import MapSection from "@/components/map/MapSection";
 import Timeline from "@/components/Timeline";
 
 export default function Home() {
