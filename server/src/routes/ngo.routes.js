@@ -13,7 +13,7 @@ import {
 } from '../controllers/ngo.controller.js';
 
 //Todo: Make auth.controller.js
-import {authenticateNGO} from '../middlewares/auth.middleware.js';
+import {authenticateNGO} from '../middlewares/authNGO.middleware.js';
 import upload from '../middlewares/upload.middleware.js';
 
 const router = Router();

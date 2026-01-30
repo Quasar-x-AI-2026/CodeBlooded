@@ -1,13 +1,9 @@
-import KPISection from "@/components/KPISection";
-import MapSection from "@/components/MapSection";
-import Timeline from "@/components/Timeline";
+const Home = () => {
+    return (
+        <>
+            <h1>Home</h1>
+        </>
+    );
+};
 
-export default function Home() {
-  return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
-      <KPISection />
-      <MapSection />
-      <Timeline />
-    </div>
-  );
-}
+export default Home;
