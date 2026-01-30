@@ -8,6 +8,9 @@ import webhookRoutes from './routes/webhook.routes.js';
 import userRoutes from './routes/user.routes.js';
 import ngoRoutes from './routes/ngo.routes.js';
 import paymentRoutes from './routes/payment.routes.js';
+import crisisRoutes from './routes/crisis.routes.js';
+import scraperRoutes from './routes/scraper.routes.js';
+import recommendationRoutes from './routes/recommendation.routes.js';
 
 const app = express();
 
@@ -23,10 +26,8 @@ app.use(
 );
 
 app.use('/api/v1/webhooks/razorpay', express.raw({type: 'application/json'}));
-app.use('/api/v1/webhooks', webhookRoutes);
 
 app.use(express.json());
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(cookieParser());
@@ -36,9 +37,14 @@ app.use(cookieParser());
 app.get('/', checkHealth);
 app.get('/api/v1/check-health', checkHealth);
 
+app.use('/api/v1/webhooks', webhookRoutes);
+
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/ngo', ngoRoutes);
 app.use('/api/v1/payment', paymentRoutes);
+app.use('/api/v1/crisis', crisisRoutes);
+app.use('/api/v1/scraper', scraperRoutes);
+app.use('/api/v1/recommendation', recommendationRoutes);
 
 // Error Handling
 app.use(errorHandler());

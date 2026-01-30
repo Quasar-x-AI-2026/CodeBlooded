@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { time } from 'console';
 
 const ngoSchema = new mongoose.Schema(
     {
@@ -98,7 +97,7 @@ ngoSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         { userId: this._id, name: this.name, ngoCode: this.NGOcode, role: 'ngo' },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15m' }
+        { expiresIn: '7d' }
     );
 };
 // Method to generate JWT refresh token

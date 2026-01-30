@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This is the backend for our web-application made using Node.JS and Express.JS",
   "license": "ISC",
-  "author": "",
+  "author": "CodeBlooded",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -13,19 +13,28 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@google/genai": "^1.38.0",
+    "@google/generative-ai": "^0.24.1",
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^1.21.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.2",
     "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "node-cron": "^4.2.1",
+    "node-geocoder": "^4.4.1",
     "nodemailer": "^7.0.12",
+    "puppeteer": "^19.11.1",
     "razorpay": "^2.9.6",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "zod": "^4.3.6",
+    "zod-to-json-schema": "^3.25.1"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.9",

@@ -5,6 +5,14 @@ import Layout from './Layout.jsx';
 
 
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import SignupNgo from './pages/ngo/Signup';
+import LoginNgo from './pages/ngo/Login.jsx';
+import SignupUser from './pages/user/Signup';
+import LoginUser from './pages/user/Login.jsx';
+import Donate from './pages/Donate.jsx';
+import SubmitReport from './pages/ngo/SubmitReport.jsx';
+import Analytics from './pages/Analytics.jsx';
+import Simulator from './pages/Simulator.jsx';
 
 const router = createBrowserRouter([
     {
@@ -24,6 +32,38 @@ const router = createBrowserRouter([
                 element: <Test />,
             },
             {
+                path: 'signup/ngo',
+                element: <SignupNgo />,
+            },
+            {
+                path: 'login/ngo',
+                element: <LoginNgo />,
+            },
+            {
+                path: 'login/user',
+                element: <LoginUser />,
+            },
+            {
+                path: 'signup/user',
+                element: <SignupUser />,
+            },
+            {
+                path: 'donate',
+                element: <Donate />,
+            },
+            {
+                path: '/ngo/report',
+                element: <SubmitReport />,
+            },
+            {
+                path: '/analytics',
+                element: <Analytics />,
+            },
+            {
+                path: '/simulator',
+                element: <Simulator />,
+            },
+            {
                 path: '*',
                 element: <NotFound />,
             },
@@ -33,7 +73,7 @@ const router = createBrowserRouter([
 
 function App() {
     return (
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <ErrorBoundary>
             <RouterProvider router={router} />
         </ErrorBoundary>

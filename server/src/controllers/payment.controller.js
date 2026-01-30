@@ -3,11 +3,14 @@ import razorpay from '../config/razorpay.config.js';
 import Payment from '../model/Payment.model.js';
 import NGO from '../model/Ngo.model.js';
 import statusCode from '../constants/statusCode.js';
-import {asyncHandler} from '../utility';
-import {ApiError} from '../utility';
-import {ApiResponse} from '../utility';
+import {asyncHandler} from '../utility/index.js';
+import {ApiError} from '../utility/index.js';
+import {ApiResponse} from '../utility/index.js';
 
 export const createPaymentOrder = asyncHandler(async (req, res) => {
+
+    const userId = req.userId;
+
     const {ngoId, amount, donorName, donorEmail, donorPhone} = req.body;
 
     if (!ngoId || !amount) {
@@ -38,19 +41,16 @@ export const createPaymentOrder = asyncHandler(async (req, res) => {
         razorpayOrderId: order.id,
         receipt: order.receipt,
         status: 'created',
+        userId
     });
 
+    console.log(payment);
+
     return res.status(statusCode.CREATED).json(
-        new ApiResponse(
-            statusCode.CREATED,
-            {
-                orderId: order.id,
-                amount: order.amount,
-                currency: order.currency,
-                key: process.env.RAZORPAY_KEY_ID,
-            },
-            'Payment order created'
-        )
+        new ApiResponse(statusCode.CREATED, 'Payment order created', {
+            ...order,
+            ...payment,
+        })
     );
 });
 
