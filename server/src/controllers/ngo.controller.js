@@ -5,6 +5,8 @@ import {ApiResponse} from '../utility/';
 import {ApiError} from '../utility';
 import cookieOptions from '../constants/cookieOptions.js';
 import Issue from '../model/Issue.model.js';
+import Report from '../model/Report.model.js';
+import {uploadToCloudinary} from '../services/cloudinary.service.js';
 
 export const registerNGO = asyncHandler(async (req, res) => {
     const data = req.body;
@@ -258,3 +260,112 @@ export const deleteIssue = asyncHandler(async (req, res) => {
             new ApiResponse(statusCode.OK, null, 'Issue deleted successfully')
         );
 });
+
+export const submitReport = asyncHandler(async (req, res) => {
+    const ngoCode = req.ngoCode;
+
+    const {
+        title,
+        description,
+        content,
+        issueSolvedAt,
+        capitalUtilised,
+        images,
+        contributors,
+        issueSolved,
+    } = req.body;
+
+    if (!ngoCode) {
+        throw new ApiError(statusCode.BAD_REQUEST, 'NGO Code is required');
+    }
+
+    if (
+        !title ||
+        !description ||
+        !issueSolvedAt ||
+        capitalUtilised === undefined
+    ) {
+        throw new ApiError(statusCode.BAD_REQUEST, 'Missing required fields');
+    }
+
+    const ngo = await NGO.findOne({NGOcode: ngoCode});
+
+    if (!ngo) {
+        throw new ApiError(statusCode.NOT_FOUND, 'NGO not found');
+    }
+
+    const report = await Report.create({
+        title,
+        description,
+        content,
+        issueSolvedAt: new Date(issueSolvedAt),
+        capitalUtilised,
+        images,
+        contributors,
+        issueSolved,
+        ngoId: ngo._id,
+    });
+
+    return res
+        .status(statusCode.CREATED)
+        .json(
+            new ApiResponse(
+                statusCode.CREATED,
+                report,
+                'Report submitted successfully'
+            )
+        );
+});
+
+export const getMyReports = asyncHandler(async (req, res) => {
+    const ngoCode = req.ngoCode;
+
+    if (!ngoCode) {
+        throw new ApiError(statusCode.BAD_REQUEST, 'NGO Code is required');
+    }
+
+    const ngo = await NGO.findOne({NGOcode: ngoCode});
+
+    if (!ngo) {
+        throw new ApiError(statusCode.NOT_FOUND, 'NGO not found');
+    }
+
+    const reports = await Report.find({ngoId: ngo._id})
+        .sort({createdAt: -1})
+        .populate('issueSolved', 'title type severity location date');
+
+    return res
+        .status(statusCode.OK)
+        .json(
+            new ApiResponse(
+                statusCode.OK,
+                reports,
+                'Reports fetched successfully'
+            )
+        );
+});
+
+export const uploadReportImages = asyncHandler(async (req, res) => {
+    if (!req.files || !req.files.length) {
+        throw new ApiError(statusCode.BAD_REQUEST, 'No images provided');
+    }
+
+    const uploadResults = [];
+
+    for (const file of req.files) {
+        const result = await uploadToCloudinary(file.buffer, 'ngo/reports');
+
+        uploadResults.push(result.secure_url);
+    }
+
+    return res.status(statusCode.OK).json(
+        new ApiResponse(
+            statusCode.OK,
+            {
+                images: uploadResults,
+            },
+            'Images uploaded successfully'
+        )
+    );
+});
+
