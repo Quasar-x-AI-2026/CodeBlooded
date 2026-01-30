@@ -1,2 +1,2 @@
-# Hackathon_Template
-This is a template containing pre-Hackathon Folders and files
+# CodeBlooded
+This is the repository for the Team <CodeBlooded/> in IIIT Ranchi, Hackathon
