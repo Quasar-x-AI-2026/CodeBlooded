@@ -79,7 +79,7 @@ export const loginNGO = asyncHandler(async (req, res) => {
     ngo.refreshToken = refreshToken;
     await ngo.save();
 
-    res.cookie('accessToken', accessToken, cookieOptions)
+    return res.cookie('accessToken', accessToken, cookieOptions)
         .cookie('refreshToken', refreshToken, cookieOptions)
         .status(statusCode.OK)
         .json(

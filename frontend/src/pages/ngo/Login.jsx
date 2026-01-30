@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 
 import { Mail, ShieldCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 import {toast} from 'sonner';
 
-export default function LoginUser() {
+export default function LoginNGO() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -25,19 +24,21 @@ export default function LoginUser() {
     setLoading(true);
 
     try {
-      const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/v1/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+          import.meta.env.VITE_SERVER_URL + '/api/v1/ngo/login',
+          {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(form),
+              credentials: 'include'
+          }
+      );
 
       if (!res.ok) throw new Error("Login failed");
 
-      toast.success("Logged in successfully");
-      // later → redirect to dashboard
+      // handle success later (token, redirect, etc.)
+      toast.success("Logged in successfully!");
     } catch (err) {
-      console.error(err);
       toast.error(err?.message || err);
     } finally {
       setLoading(false);
@@ -46,24 +47,24 @@ export default function LoginUser() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] flex items-center justify-center px-4">
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-[var(--border)] shadow-xl animate-[fadeUp_0.6s_ease-out]">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden shadow-xl border border-[var(--border)] animate-[fadeUp_0.6s_ease-out]">
 
-        {/* LEFT PANEL (DESKTOP ONLY) */}
-        <div className="hidden lg:block relative bg-[var(--accent-cyan-lighter)]">
+        {/* LEFT ILLUSTRATION (DESKTOP ONLY) */}
+        <div className="hidden lg:block relative bg-[var(--accent-green-lighter)]">
           <img
-            src="/images/userauth.png"
-            alt="Community support"
+            src="/images/ngo-illustration.png"
+            alt="NGO Relief Illustration"
             className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
 
-        {/* RIGHT PANEL */}
+        {/* RIGHT FORM */}
         <Card className="rounded-none border-0 p-8">
           <h1 className="text-2xl font-semibold text-[var(--foreground)]">
-            Log in to your account
+            Log in to your NGO account
           </h1>
           <p className="text-sm text-[var(--muted-foreground)] mt-1">
-            Access your dashboard and manage your activity
+            Access your dashboard and manage crisis response
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -79,7 +80,7 @@ export default function LoginUser() {
                   type="email"
                   required
                   className="pl-9"
-                  placeholder="user@example.com"
+                  placeholder="ngo@example.org"
                   value={form.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                 />
@@ -113,14 +114,14 @@ export default function LoginUser() {
               {loading ? "Logging in..." : "Log in"}
             </Button>
 
-            {/* SIGNUP LINK */}
+            {/* CREATE ACCOUNT LINK */}
             <p className="text-center text-sm text-[var(--muted-foreground)] mt-4">
               Don’t have an account?{" "}
               <Link
-                to="/signup/user"
+                to="/signup/ngo"
                 className="text-[var(--primary)] hover:underline font-medium"
               >
-                Create one
+                Create account
               </Link>
             </p>
           </form>

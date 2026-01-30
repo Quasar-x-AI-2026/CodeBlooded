@@ -260,6 +260,125 @@ button:hover {
   }
 }
 
+.fade-up {
+  animation: fadeUp 0.4s ease-out forwards;
+}
+
+.dashboard-animate {
+  animation: fadeUp 0.5s ease both;
+}
+ 
+/* -------- Radar Pulse Marker -------- */
+/* -------- Radar Pulse Marker (FIXED) -------- */
+
+.radar-marker {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  z-index: 10;
+}
+
+/* pulse rings */
+.radar-marker::before,
+.radar-marker::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 9999px;
+
+  /* THIS is the key line */
+  border: 2px solid currentColor;
+
+  opacity: 0.6;
+  animation: radar-pulse 2s ease-out infinite;
+}
+
+.radar-marker::after {
+  animation-delay: 1s;
+}
+
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Prevent Leaflet interaction issues */
+.radar-marker,
+.radar-marker::before,
+.radar-marker::after {
+  pointer-events: none;
+}
+
+/* -----------------------------
+   DASHBOARD UI UTILITIES
+------------------------------ */
+
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 12px 30px -12px oklch(0.2 0.02 260 / 0.18),
+    0 4px 12px -6px oklch(0.2 0.02 260 / 0.1);
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--sidebar);
+  box-shadow: 4px 0 24px -12px oklch(0.2 0.02 260 / 0.18);
+}
+
+/* Buttons */
+button,
+.btn {
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Icon Badges */
+.icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: var(--muted);
+  display: grid;
+  place-items: center;
+}
+
+/* Stat Cards */
+.stat-card {
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow:
+    0 14px 35px -14px oklch(0.2 0.02 260 / 0.22);
+}
+
+/* -----------------------------
+   ANIMATIONS
+------------------------------ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .dashboard-animate {
   animation: fadeUp 0.5s ease both;
 }

@@ -47,14 +47,10 @@ export const createPaymentOrder = asyncHandler(async (req, res) => {
     console.log(payment);
 
     return res.status(statusCode.CREATED).json(
-        new ApiResponse(
-            statusCode.CREATED,
-            {
-                ...order,
-                ...payment,
-            },
-            'Payment order created'
-        )
+        new ApiResponse(statusCode.CREATED, 'Payment order created', {
+            ...order,
+            ...payment,
+        })
     );
 });
 

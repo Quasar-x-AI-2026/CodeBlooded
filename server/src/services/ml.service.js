@@ -8,7 +8,7 @@ export const analyzeCrisis = async (
     location = 'Unknown'
 ) => {
     try {
-        const response = await axios.post(`${ML_SERVICE_URL}/analyze_crisis`, {
+        const response = await axios.post(`${MODEL_SERVICE_URL}/analyze_crisis`, {
             text,
             source,
             location,

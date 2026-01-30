@@ -9,6 +9,8 @@ import userRoutes from './routes/user.routes.js';
 import ngoRoutes from './routes/ngo.routes.js';
 import paymentRoutes from './routes/payment.routes.js';
 import crisisRoutes from './routes/crisis.routes.js';
+import scraperRoutes from './routes/scraper.routes.js';
+import recommendationRoutes from './routes/recommendation.routes.js';
 
 const app = express();
 
@@ -41,6 +43,8 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/ngo', ngoRoutes);
 app.use('/api/v1/payment', paymentRoutes);
 app.use('/api/v1/crisis', crisisRoutes);
+app.use('/api/v1/scraper', scraperRoutes);
+app.use('/api/v1/recommendation', recommendationRoutes);
 
 // Error Handling
 app.use(errorHandler());
