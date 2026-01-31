@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 import SimulatorHeader from '@/components/simulator/SimulatorHeader';
 import SimulatorMap from '@/components/simulator/SimulatorMap';
@@ -7,6 +7,26 @@ import DisasterFeed from '@/components/simulator/DisasterFeed';
 export default function Simulator() {
     const [disasters, setDisasters] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    // Fetch existing issues on mount
+    useEffect(() => {
+        const fetchExistingIssues = async () => {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_SERVER_URL}/api/v1/crisis/issues`
+                );
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json?.data?.issues) {
+                        setDisasters(json.data.issues);
+                    }
+                }
+            } catch (err) {
+                console.error('Failed to fetch existing issues:', err);
+            }
+        };
+        fetchExistingIssues();
+    }, []);
 
     const handleGenerateDisaster = async (inputText) => {
         if (!inputText?.trim()) return;

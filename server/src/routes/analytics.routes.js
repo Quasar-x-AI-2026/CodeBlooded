@@ -1,8 +1,11 @@
 import Router from 'express';
-import { handleReportAnalysis, handleQuickVerify } from '../controllers/reportAnalysis.controller.js';
+import { getDashboardStats, getPriorityCrises, getTopNGOs, getTopDonors } from '../controllers/analytics.controller.js';
 
 const router = Router();
 
-router.get('/fetch')
+router.get('/dashboard', getDashboardStats);
+router.get('/priority-crises', getPriorityCrises);
+router.get('/top-ngos', getTopNGOs);
+router.get('/top-donors', getTopDonors);
 
 export default router;

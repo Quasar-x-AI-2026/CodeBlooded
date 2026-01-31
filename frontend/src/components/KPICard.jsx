@@ -77,13 +77,17 @@ export default function KPICard({
           <p className="mt-1 text-2xl font-semibold flex items-baseline gap-1" style={{ color: 'var(--card-foreground)' }}>
             {prefix && <span>{prefix}</span>}
 
-            <CountUp
-              from={0}
-              to={value}
-              duration={2}
-              separator=","
-              className="tracking-tight"
-            />
+            {typeof value === 'number' ? (
+              <CountUp
+                from={0}
+                to={value}
+                duration={2}
+                separator=","
+                className="tracking-tight"
+              />
+            ) : (
+              <span className="tracking-tight">{value}</span>
+            )}
 
             {suffix && <span className="text-lg">{suffix}</span>}
           </p>

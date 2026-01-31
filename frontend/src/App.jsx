@@ -13,6 +13,10 @@ import SubmitReport from './pages/ngo/SubmitReport.jsx';
 import Analytics from './pages/Analytics.jsx';
 import Simulator from './pages/Simulator.jsx';
 import RaiseIssue from './pages/RaiseIssue.jsx';
+import NGOs from './pages/ngo/NGOs.jsx';
+import NGOReports from './pages/ngo/NGOReports.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Feed from './pages/Feed.jsx';
 
 const router = createBrowserRouter([
     {
@@ -22,6 +26,14 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <Home />,
+            },
+            {
+                path: 'dashboard',
+                element: <Dashboard />,
+            },
+            {
+                path: 'feed',
+                element: <Feed />,
             },
             {
                 path: 'about',
@@ -64,8 +76,16 @@ const router = createBrowserRouter([
                 element: <Simulator />,
             },
             {
-                path: '/issue',
+                path: '/raise-issue',
                 element: <RaiseIssue />,
+            },
+            {
+                path: '/ngos',
+                element: <NGOs />,
+            },
+            {
+                path: '/ngo/:ngoId',
+                element: <NGOReports/>,
             },
             {
                 path: '*',

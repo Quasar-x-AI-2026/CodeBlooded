@@ -346,7 +346,10 @@ export const submitReport = asyncHandler(async (req, res) => {
 });
 
 export const getMyReports = asyncHandler(async (req, res) => {
-    const {ngoId} = req.body;
+
+    const ngoId = req.params.ngoId;
+
+    console.log(ngoId);
 
     if (!ngoId) {
         throw new ApiError(statusCode.BAD_REQUEST, 'NGO ID is required');
@@ -359,8 +362,7 @@ export const getMyReports = asyncHandler(async (req, res) => {
     }
 
     const reports = await Report.find({ngoId: ngo._id})
-        .sort({createdAt: -1})
-        .populate('issueSolved', 'title type severity location date');
+        .sort({createdAt: -1});
 
     return res
         .status(statusCode.OK)
@@ -440,8 +442,34 @@ export const getNGOPublicProfile = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(
                 statusCode.OK,
-                ngo,
-                'NGO public profile fetched successfully'
+                'NGO public profile fetched successfully',
+                ngo
+            )
+        );
+});
+
+export const getNGOReportsPublic = asyncHandler(async (req, res) => {
+    const {ngoId} = req.params;
+
+    if (!ngoId) {
+        throw new ApiError(statusCode.BAD_REQUEST, 'NGO ID is required');
+    }
+
+    const ngo = await NGO.findById(ngoId).select('name type NGOcode').lean();
+
+    if (!ngo) {
+        throw new ApiError(statusCode.NOT_FOUND, 'NGO not found');
+    }
+
+    const reports = await Report.find({ngoId}).sort({createdAt: -1}).lean();
+
+    return res
+        .status(statusCode.OK)
+        .json(
+            new ApiResponse(
+                statusCode.OK,
+                {ngo, reports},
+                'NGO reports fetched successfully'
             )
         );
 });

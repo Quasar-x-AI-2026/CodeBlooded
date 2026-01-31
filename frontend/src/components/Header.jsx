@@ -84,6 +84,7 @@ export default function Header() {
             return [
                 {label: 'Home', path: '/'},
                 {label: 'Dashboard', path: '/dashboard'},
+                {label: 'Feed', path: '/feed'},
                 {label: 'Donation', path: '/donate'},
                 {label: 'Raise Issue', path: '/raise-issue'},
                 {label: 'Simulator', path: '/simulator'},
@@ -92,6 +93,7 @@ export default function Header() {
             return [
                 {label: 'Home', path: '/'},
                 {label: 'Dashboard', path: '/dashboard'},
+                {label: 'Feed', path: '/feed'},
                 {label: 'Report Submission', path: '/ngo/report'},
                 {label: 'Simulator', path: '/simulator'},
             ];

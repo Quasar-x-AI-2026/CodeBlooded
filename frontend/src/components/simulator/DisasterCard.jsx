@@ -30,7 +30,7 @@ export default function DisasterCard({ issue }) {
             {title}
           </h3>
           <p className="text-xs text-[var(--muted-foreground)]">
-            {aiAnalysis.location.name} • {new Date(date).toLocaleString()}
+            {aiAnalysis?.location?.name || "Unknown Location"} • {new Date(date).toLocaleString()}
           </p>
         </div>
 

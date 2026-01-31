@@ -1,30 +1,29 @@
+import { useState, useEffect } from "react";
+
 export default function PriorityPanel() {
-  const crises = [
-    {
-      state: "Assam",
-      type: "Flood",
-      score: 82,
-      level: "High",
-      population: "1.03M",
-      color: "red",
-    },
-    {
-      state: "Maharashtra",
-      type: "Dengue",
-      score: 76,
-      level: "Moderate",
-      population: "3.2M",
-      color: "yellow",
-    },
-    {
-      state: "Bihar",
-      type: "Food Shortage",
-      score: 71,
-      level: "High",
-      population: "2.1M",
-      color: "orange",
-    },
-  ];
+  const [crises, setCrises] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPriorityCrises = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/analytics/priority-crises`
+        );
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.data?.crises) {
+            setCrises(json.data.crises);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch priority crises:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPriorityCrises();
+  }, []);
 
   const getColorStyles = (color) => {
     if (color === "red") {
@@ -67,47 +66,57 @@ export default function PriorityPanel() {
         Crises in Priority
       </h3>
 
-      <div className="space-y-3">
-        {crises.map((c, i) => {
-          const colors = getColorStyles(c.color);
-          return (
-            <div
-              key={i}
-              className="flex items-start gap-3 p-4 rounded-xl border"
-              style={{
-                backgroundColor: colors.bg,
-                borderColor: colors.border,
-              }}
-            >
-              {/* Indicator */}
+      {loading ? (
+        <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>
+          Loading...
+        </p>
+      ) : crises.length === 0 ? (
+        <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>
+          No active crises at the moment.
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {crises.map((c) => {
+            const colors = getColorStyles(c.color);
+            return (
               <div
-                className="w-3 h-3 rounded-full mt-2"
-                style={{ backgroundColor: colors.indicator }}
-              />
-
-              {/* Info */}
-              <div className="flex-1">
-                <p className="font-medium" style={{ color: 'var(--card-foreground)' }}>{c.state}</p>
-                <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>{c.type}</p>
-                <p className="text-xs mt-1" style={{ color: 'var(--muted-foreground)' }}>
-                  Est. population impacted: {c.population}
-                </p>
-              </div>
-
-              {/* Risk Badge */}
-              <span
-                className="px-2 py-1 rounded-md text-xs font-medium"
+                key={c._id}
+                className="flex items-start gap-3 p-4 rounded-xl border"
                 style={{
-                  backgroundColor: colors.badgeBg,
-                  color: colors.badgeText,
+                  backgroundColor: colors.bg,
+                  borderColor: colors.border,
                 }}
               >
-                {c.score} {c.level}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+                {/* Indicator */}
+                <div
+                  className="w-3 h-3 rounded-full mt-2"
+                  style={{ backgroundColor: colors.indicator }}
+                />
+
+                {/* Info */}
+                <div className="flex-1">
+                  <p className="font-medium" style={{ color: 'var(--card-foreground)' }}>{c.state}</p>
+                  <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>{c.type}</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--muted-foreground)' }}>
+                    {c.population}
+                  </p>
+                </div>
+
+                {/* Risk Badge */}
+                <span
+                  className="px-2 py-1 rounded-md text-xs font-medium"
+                  style={{
+                    backgroundColor: colors.badgeBg,
+                    color: colors.badgeText,
+                  }}
+                >
+                  {c.score} {c.level}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

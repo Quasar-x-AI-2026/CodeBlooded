@@ -171,3 +171,37 @@ const mapCrisisTypeToEnum = (mlType) => {
         return 'disease';
     return 'others';
 };
+
+/**
+ * GET /api/v1/crisis/issues
+ * Fetch all active issues for map display
+ */
+export const getAllIssues = asyncHandler(async (req, res) => {
+    const { status, type } = req.query;
+
+    // Build query filter
+    const filter = {};
+    
+    if (status) {
+        filter.status = status;
+    } else {
+        // Default: fetch active issues
+        filter.status = { $in: ['OPEN', 'IN_PROGRESS'] };
+    }
+    
+    if (type) {
+        filter.type = type;
+    }
+
+    const issues = await Issue.find(filter)
+        .sort({ severity: -1, createdAt: -1 })
+        .limit(100)
+        .select('title description type status severity coordinates date aiAnalysis createdAt');
+
+    return res.status(statusCode.OK).json(
+        new ApiResponse(statusCode.OK, 'Issues fetched successfully', {
+            count: issues.length,
+            issues,
+        })
+    );
+});

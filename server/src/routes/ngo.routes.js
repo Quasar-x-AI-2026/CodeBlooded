@@ -12,6 +12,7 @@ import {
     uploadReportImages,
     getAllNGOs,
     getNGOPublicProfile,
+    getNGOReportsPublic,
 } from '../controllers/ngo.controller.js';
 
 import {authenticateNGO} from '../middlewares/authNGO.middleware.js';
@@ -33,7 +34,7 @@ router.delete('/deleteIssue/:issueId', authenticateNGO, deleteIssue);
 
 // Report Submission
 router.post('/report-submission', authenticateNGO, submitReport);
-router.get('/report-submission', getMyReports);
+router.get('/report-submission/:ngoId', getMyReports);
 router.post(
     '/upload-images',
     authenticateNGO,
@@ -43,5 +44,6 @@ router.post(
 
 router.get('/', getAllNGOs);
 router.get('/:ngoId', getNGOPublicProfile);
+router.get('/:ngoId/reports', getNGOReportsPublic);
 
 export default router;
