@@ -17,7 +17,6 @@ export default function MapSection() {
        
         <PriorityPanel />
         <AISignals />
-        <RegisterPanel />
       </div>
       </Stagger>
 

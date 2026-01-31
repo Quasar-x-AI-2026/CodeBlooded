@@ -1,7 +1,6 @@
 import KPISection from "@/components/KPISection";
 import MapSection from "@/components/map/MapSection";
 import Timeline from "@/components/Timeline";
-import Stagger from "../components/Stagger";
 
 export default function Home() {
   return (

@@ -36,7 +36,7 @@ export default function IndiaMap() {
 
   // Load GeoJSON for India states
   useEffect(() => {
-    fetch("/geo/india_states.geojson")
+    fetch("")
       .then((res) => res.json())
       .then((data) => {
         setGeoData(data);
